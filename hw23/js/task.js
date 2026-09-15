@@ -12,7 +12,16 @@ const getItems = (element) => {
     if (child.tagName === "LI") {
       console.log(child);
       totalLiElements++;
-      const text = child.firstChild?.textContent.trim();
+
+      const text = [...child.childNodes]
+        .filter(
+          (node) =>
+            node.nodeType === Node.TEXT_NODE || node.nodeName === "SPAN", // span - щоб дістати Білі шкарпетки як edge case
+        )
+        .map((node) => node.textContent.trim())
+        .join(" ")
+        .trim();
+
       if (text) {
         items.push(text);
       }
