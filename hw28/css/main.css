@@ -1,0 +1,357 @@
+/* ---------- Design tokens ---------- */
+:root {
+  color-scheme: light dark;
+
+  /* Colors */
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-text: #16181d;
+  --color-muted: #6b7280;
+  --color-border: #d6d9df;
+  --color-accent: #3b5bdb;
+  --color-accent-hover: #2f49b5;
+  --color-accent-contrast: #ffffff;
+  --color-danger: #d93025;
+  --color-warning: #f59f00;
+  --color-success: #2f9e44;
+  --color-track: #e6e8ec;
+  --color-focus-ring: rgb(59 91 219 / 0.25);
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Shape and type */
+  --radius: 8px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-sm: 0.8125rem;
+  --text-md: 0.9375rem;
+
+  /* Motion */
+  --duration: 180ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px rgb(0 0 0 / 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f1115;
+    --color-surface: #181b21;
+    --color-text: #e8eaed;
+    --color-muted: #9aa0aa;
+    --color-border: #2c313a;
+    --color-accent: #7c93ff;
+    --color-accent-hover: #98aaff;
+    --color-accent-contrast: #0f1115;
+    --color-danger: #ff6b61;
+    --color-warning: #fcc419;
+    --color-success: #51cf66;
+    --color-track: #2a2f38;
+    --color-focus-ring: rgb(124 147 255 / 0.3);
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.35);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: var(--space-6) var(--space-4);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: var(--text-md) / 1.5 var(--font);
+}
+
+form,
+#result:not(:empty) {
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius) * 1.5);
+  box-shadow: var(--shadow);
+}
+
+form {
+  padding: var(--space-5);
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.field label {
+  flex: 0 0 100%;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-muted);
+}
+
+input:not([type="checkbox"]),
+select {
+  flex: 1;
+  min-width: 0;
+  padding: 10px var(--space-3);
+  font: inherit;
+  color: inherit;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  outline: none;
+  transition:
+    border-color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+
+input:not([type="checkbox"]):hover,
+select:hover {
+  border-color: var(--color-muted);
+}
+
+input:not([type="checkbox"]):focus-visible,
+select:focus-visible {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+input[type="number"] {
+  flex: 0 0 120px;
+}
+
+.field:has(input[type="checkbox"]) label {
+  flex: 1;
+  font-size: var(--text-md);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  transition: outline-color var(--duration) var(--ease);
+}
+
+.error {
+  flex: 0 0 100%;
+  min-height: 1.2em;
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+}
+
+.error:not(:empty) {
+  animation: error-in var(--duration) var(--ease);
+}
+
+@keyframes error-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+input.invalid:not([type="checkbox"]),
+select.invalid {
+  border-color: var(--color-danger);
+}
+
+input.invalid:not([type="checkbox"]):focus-visible,
+select.invalid:focus-visible {
+  box-shadow: 0 0 0 3px rgb(217 48 37 / 0.2);
+}
+
+input[type="checkbox"].invalid {
+  outline: 2px solid var(--color-danger);
+  outline-offset: 2px;
+}
+
+button {
+  padding: 10px var(--space-4);
+  font: inherit;
+  font-weight: 500;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    transform var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+
+button:hover {
+  border-color: var(--color-muted);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+button[type="submit"] {
+  color: var(--color-accent-contrast);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+button[type="submit"]:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.field:has([data-toggle-password]) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-1) 0;
+}
+
+.field:has([data-toggle-password]) > label {
+  grid-row: 1;
+}
+
+.field:has([data-toggle-password]) > input {
+  grid-row: 2;
+  grid-column: 1;
+  padding-right: 88px;
+}
+
+.field:has([data-toggle-password]) > [data-toggle-password] {
+  grid-row: 2;
+  grid-column: 1;
+  justify-self: end;
+  align-self: center;
+  margin-right: var(--space-1);
+}
+
+.field:has([data-toggle-password]) > #passwordStrength {
+  grid-row: 3;
+}
+
+.field:has([data-toggle-password]) > .error {
+  grid-row: 3;
+}
+
+.field:has(#passwordStrength) > .error {
+  grid-row: 4;
+}
+
+[data-toggle-password] {
+  padding: 10px var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+  border-color: transparent;
+}
+
+[data-toggle-password]:hover,
+[data-toggle-password][aria-pressed="true"] {
+  color: var(--color-accent);
+  border-color: transparent;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.actions button[type="submit"] {
+  flex: 1;
+}
+
+#passwordStrength {
+  --strength-color: var(--color-track);
+  --strength-width: 0%;
+  flex: 0 0 100%;
+  max-width: 240px;
+  min-height: 1.2em;
+  font-size: var(--text-sm);
+  color: var(--strength-color);
+  transition: color var(--duration) var(--ease);
+}
+
+#passwordStrength::before {
+  content: "";
+  display: block;
+  height: 6px;
+  margin-bottom: var(--space-1);
+  visibility: hidden;
+  background:
+    linear-gradient(var(--strength-color), var(--strength-color)) left /
+      var(--strength-width) 100% no-repeat,
+    var(--color-track);
+  -webkit-mask: repeating-linear-gradient(
+    to right,
+    #000 0 calc(33.333% - 3px),
+    transparent 0 33.333%
+  );
+  mask: repeating-linear-gradient(
+    to right,
+    #000 0 calc(33.333% - 3px),
+    transparent 0 33.333%
+  );
+  transition: background-size 300ms var(--ease);
+}
+
+#passwordStrength:not([data-level=""])::before {
+  visibility: visible;
+}
+
+#passwordStrength[data-level="weak"] {
+  --strength-color: var(--color-danger);
+  --strength-width: 33.333%;
+}
+
+#passwordStrength[data-level="medium"] {
+  --strength-color: var(--color-warning);
+  --strength-width: 66.666%;
+}
+
+#passwordStrength[data-level="strong"] {
+  --strength-color: var(--color-success);
+  --strength-width: 100%;
+}
+
+#result:not(:empty) {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  font:
+    var(--text-sm) / 1.6 ui-monospace,
+    "SF Mono",
+    Menlo,
+    monospace;
+  overflow-x: auto;
+  animation: result-in 260ms var(--ease);
+}
+
+@keyframes result-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HW 28</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <form id="registerForm" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          aria-describedby="email-error"
+          name="email"
+          autocomplete="email"
+        />
+        <small class="error" id="email-error" data-error-for="email"></small>
+      </div>
+
+      <div class="field">
+        <label for="password">Пароль</label>
+        <input
+          type="password"
+          id="password"
+          aria-describedby="password-error passwordStrength"
+          name="password"
+          autocomplete="new-password"
+        />
+
+        <button
+          type="button"
+          data-toggle-password="password"
+          aria-pressed="false"
+        >
+          Показати
+        </button>
+        <div id="passwordStrength" data-level="" aria-live="polite"></div>
+        <small
+          class="error"
+          id="password-error"
+          data-error-for="password"
+        ></small>
+      </div>
+
+      <div class="field">
+        <label for="confirmPassword">Підтвердження пароля</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          aria-describedby="confirmPassword-error"
+          name="confirmPassword"
+          autocomplete="new-password"
+        />
+        <button
+          type="button"
+          data-toggle-password="confirmPassword"
+          aria-pressed="false"
+        >
+          Показати
+        </button>
+        <small
+          class="error"
+          id="confirmPassword-error"
+          data-error-for="confirmPassword"
+        ></small>
+      </div>
+
+      <div class="field">
+        <label for="age">Вік</label>
+        <input
+          type="number"
+          id="age"
+          aria-describedby="age-error"
+          name="age"
+          min="16"
+          max="120"
+        />
+        <small class="error" id="age-error" data-error-for="age"></small>
+      </div>
+
+      <div class="field">
+        <label for="city">Місто</label>
+        <select id="city" aria-describedby="city-error" name="city">
+          <option value="">Оберіть місто</option>
+          <option value="kyiv">Київ</option>
+          <option value="lviv">Львів</option>
+          <option value="odesa">Одеса</option>
+          <option value="kharkiv">Харків</option>
+        </select>
+        <small class="error" id="city-error" data-error-for="city"></small>
+      </div>
+
+      <div class="field">
+        <input
+          type="checkbox"
+          id="terms"
+          aria-describedby="terms-error"
+          name="terms"
+        />
+        <label for="terms">Погоджуюсь з умовами</label>
+        <small class="error" id="terms-error" data-error-for="terms"></small>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Зареєструватись</button>
+        <button type="button" id="clearBtn">Очистити</button>
+      </div>
+    </form>
+
+    <pre id="result"></pre>
+		
+    <script src="./js/main.js" defer></script>
+  </body>
+</html>
