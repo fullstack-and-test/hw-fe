@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo List · MVC</title>
+    <link
+      rel="stylesheet"
+      href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./styles/main.css" />
+  </head>
+  <body>
+    <main class="container py-5">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+          <h1 class="mb-4">
+            Todo List <small class="text-body-secondary fs-6"></small>
+          </h1>
+
+          <form class="d-flex gap-2 mb-3" data-search-form role="search">
+            <label for="search" class="visually-hidden">Search todos</label>
+            <input
+              id="search"
+              name="query"
+              type="search"
+              class="form-control"
+              placeholder="Search by title"
+              autocomplete="off"
+            />
+          </form>
+
+          <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+            <div
+              class="btn-group"
+              role="group"
+              aria-label="Filter by status"
+              data-filter-group
+            >
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-filter="all"
+                aria-pressed="false"
+              >
+                All
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-filter="active"
+                aria-pressed="false"
+              >
+                Active
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-filter="completed"
+                aria-pressed="false"
+              >
+                Completed
+              </button>
+            </div>
+          </div>
+
+          <form class="row g-2 mb-3" data-todo-create-form novalidate>
+            <div class="col-md-4">
+              <label for="title" class="visually-hidden">Title</label>
+              <input
+                id="title"
+                name="title"
+                class="form-control"
+                placeholder="Todo title"
+                autocomplete="off"
+              />
+              <div class="invalid-feedback" data-create-error></div>
+            </div>
+            <div class="col-md-6">
+              <label for="description" class="visually-hidden">Description</label>
+              <input
+                id="description"
+                name="description"
+                class="form-control"
+                placeholder="Description (optional)"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-primary w-100" type="submit">Add</button>
+            </div>
+
+            <div class="col-md-3">
+              <label for="priority" class="form-label small mb-1"
+                >Priority</label
+              >
+              <select id="priority" name="priority" class="form-select">
+                <option value="high">high</option>
+                <option value="medium" selected>medium</option>
+                <option value="low">low</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="dueDate" class="form-label small mb-1"
+                >Due date (UTC)</label
+              >
+              <input
+                id="dueDate"
+                name="dueDate"
+                type="datetime-local"
+                step="1"
+                class="form-control"
+              />
+            </div>
+          </form>
+
+          <div
+            class="d-flex justify-content-between align-items-center mb-2"
+          >
+            <p class="text-body-secondary small mb-0" data-todo-stats></p>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-danger"
+              data-clear-completed
+            >
+              Clear completed
+            </button>
+          </div>
+
+          <ul class="list-group todo-list" data-todo-list>
+            <li class="list-group-item">Data not loaded</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <div
+      class="modal fade"
+      id="editTodoModal"
+      tabindex="-1"
+      aria-labelledby="editTodoTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="editTodoTitle">Edit todo</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editTodoForm" novalidate>
+              <div class="mb-3">
+                <label for="editTitle" class="form-label">Title</label>
+                <input id="editTitle" name="title" class="form-control" />
+                <div class="invalid-feedback" data-edit-error></div>
+              </div>
+              <div class="mb-3">
+                <label for="editDescription" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  id="editDescription"
+                  name="description"
+                  class="form-control"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="row g-2">
+                <div class="col-6">
+                  <label for="editPriority" class="form-label">Priority</label>
+                  <select id="editPriority" name="priority" class="form-select">
+                    <option value="high">high</option>
+                    <option value="medium">medium</option>
+                    <option value="low">low</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label for="editDueDate" class="form-label">Due date (UTC)</label>
+                  <input
+                    id="editDueDate"
+                    name="dueDate"
+                    type="datetime-local"
+                    step="1"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary" form="editTodoForm">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="deleteTodoModal"
+      tabindex="-1"
+      aria-labelledby="deleteTodoTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteTodoTitle">Delete todo</h1>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0" data-delete-text>
+              Delete todo: <b data-delete-title></b>?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" data-confirm-delete>
+              Yes, delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <template data-todo-template>
+      <li class="list-group-item d-flex gap-3 align-items-start">
+        <input type="checkbox" class="form-check-input mt-1" data-toggle />
+        <div class="flex-grow-1">
+          <h2 class="h6 mb-1" data-field="title"></h2>
+          <p class="mb-1 text-body-secondary" data-field="description"></p>
+          <small class="text-body-secondary"
+            ><span data-field="dateLabel"></span>
+            <span data-field="date"></span
+          ></small>
+        </div>
+        <button type="button" class="btn btn-sm btn-warning" data-edit>
+          Edit
+        </button>
+        <button type="button" class="btn btn-sm btn-danger" data-delete>
+          Delete
+        </button>
+      </li>
+    </template>
+
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="module" src="./scripts/main.js"></script>
+  </body>
+</html>

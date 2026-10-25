@@ -1,0 +1,48 @@
+.btn {
+  transition:
+    transform 0.12s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.list-group-item {
+  transition:
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.list-group-item:not(.list-group-item-danger):hover {
+  background-color: var(--bs-tertiary-bg);
+}
+
+.text-decoration-line-through {
+  text-decoration: none !important;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 55% / 100%
+    1.5px;
+  animation: strike-through 0.3s ease-out;
+}
+
+@keyframes strike-through {
+  from {
+    background-size: 0% 1.5px;
+  }
+  to {
+    background-size: 100% 1.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .list-group-item {
+    transition: none;
+  }
+
+  .text-decoration-line-through {
+    animation: none;
+  }
+}
